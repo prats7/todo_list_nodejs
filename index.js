@@ -1,12 +1,14 @@
 const express = require('express');
 const path = require('path');
+
+const db = require('./config/mongoose');
 const app = express();
 const port = 8000;
 
 //set ejs
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname, 'views'));
-app.use(express.urlencoded());
+ app.use(express.urlencoded());
 app.use(express.static('assets'));
 
 
@@ -40,10 +42,16 @@ app.post('/create-todolist' ,(req,res) => {
     return res.redirect('back');
 });
 
-
+//for deleting todolist
 app.get('/delete-todo/:description' , (req,res) => {
     console.log(req.params);
     let description = req.params.description;
+
+    let todoIndex = todoList.findIndex(todo => todo.description == description);
+    if(todoIndex != -1){
+        todoList.splice(todoIndex, 1);
+    }
+    return res.redirect('back');
 });
 
 
