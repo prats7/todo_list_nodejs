@@ -1,4 +1,4 @@
-lconst express = require('express');
+const express = require('express');
 const path = require('path');
 const app = express();
 const port = 8000;
@@ -6,6 +6,10 @@ const port = 8000;
 //set ejs
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname, 'views'));
+app.use(express.urlencoded());
+
+//use express router
+app.use('/',require('./routes'));
 
 var todoList = [
     {
@@ -18,8 +22,7 @@ var todoList = [
     }
 ]
 
-//use express router
-app.use('/',require('./routes'));
+
 
 app.get('/', (req,res) => {
     return res.render('home', {
@@ -27,6 +30,16 @@ app.get('/', (req,res) => {
         todo_list: todoList
     });
 });
+
+
+app.post('/create-todolist' ,(req,res) => {
+    todoList.push(req.body);
+    return res.redirect('back');
+});
+
+
+
+
 
 app.listen(port, function(err){
     if(err){
