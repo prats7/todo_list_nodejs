@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 
 const db = require('./config/mongoose');
+const Todo = require('./models/todo');
+
 const app = express();
 const port = 8000;
 
@@ -38,8 +40,18 @@ app.get('/', (req,res) => {
 
 
 app.post('/create-todolist' ,(req,res) => {
-    todoList.push(req.body);
-    return res.redirect('back');
+    Todo.create({
+        description: req.body.description,
+        category: req.body.category
+    }, (err, newTodo) => {
+        if(err){
+            console.log('error in adding todo');
+            return;
+        }
+        console.log('********',newTodo);
+        return res.redirect('back');
+    });
+    
 });
 
 //for deleting todolist
