@@ -7,6 +7,9 @@ const port = 8000;
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname, 'views'));
 app.use(express.urlencoded());
+app.use(express.static('assets'));
+
+
 
 //use express router
 app.use('/',require('./routes'));
@@ -38,7 +41,10 @@ app.post('/create-todolist' ,(req,res) => {
 });
 
 
-
+app.get('/delete-todo/:description' , (req,res) => {
+    console.log(req.params);
+    let description = req.params.description;
+});
 
 
 app.listen(port, function(err){
