@@ -32,10 +32,19 @@ var todoList = [
 
 
 app.get('/', (req,res) => {
-    return res.render('home', {
-        title: "TODO List",
-        todo_list: todoList
+
+    Todo.find({}, (err, todoList) => {
+        if(err){
+            console.log('Error in fetching items from db');
+            return;
+        }
+        return res.render('home', {
+            title: "TODO List",
+            todo_list: todoList
+        });
     });
+
+   
 });
 
 
@@ -55,15 +64,20 @@ app.post('/create-todolist' ,(req,res) => {
 });
 
 //for deleting todolist
-app.get('/delete-todo/:description' , (req,res) => {
-    console.log(req.params);
-    let description = req.params.description;
+app.get('/delete-todolist' , (req,res) => {
+    //get the id query in the ul
+    let id = req.query.id;
+    //find the todo in db using id and delete
+    Todo.findByIdAndDelete(id, function(err){
+        if(err){
+            console.log('error in deleting an object from db');
+            return;
+        }
+        return res.redirect('back');
+    });
 
-    let todoIndex = todoList.findIndex(todo => todo.description == description);
-    if(todoIndex != -1){
-        todoList.splice(todoIndex, 1);
-    }
-    return res.redirect('back');
+    
+   
 });
 
 
