@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { text } = require('express');
 
 const todoSchema = new mongoose.Schema({
     description: {
@@ -6,6 +7,10 @@ const todoSchema = new mongoose.Schema({
         required: true
     },
     category: {
+        type: String,
+        required: true
+    },
+    date: {
         type: String,
         required: true
     }

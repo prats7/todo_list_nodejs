@@ -5,39 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    $( function() {
+        $( "#datepicker" ).datepicker();
+    } );
+    </script>
     <title>
         <%= locals.title %>
     </title>
 </head>
 <body>
-    <h1>TODO List</h1>
+    <h1 class="display-4">TODO App</h1>
     
-    <form action="/create-todolist " method="POST">
-        <input type="text" name="description" placeholder="Tell me what you want to do" required>
-        <input type="text" name="category" placeholder="what for" required>
-        <button type="submit"> ADD</button>
+    <form class="form-b" action="/create-todolist " method="POST">
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Description</label>
+            <input type="text" class="form-control" name="description" placeholder="What do you need to do ?" required>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Category</label>
+            <select class="form-control" type="text" name="category" aria-placeholder="choose a category">
+              <option>Personal</option>
+              <option>Work</option>
+              <option>School</option>
+              <option>Cleaning</option>
+              <option>Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="forDate">Due date</label>
+            <p>Date: <input type="text" id="date"></p>
+        </div>
+        
+        <button id="add-btn" type="submit" class="btn btn-outline-success">ADD TASK</button>
     </form>
+    <br>
     <div id="todo-list-container">
         <ul>
             <% for (let i of todo_list) { %>
                 <li class="todo">
                     <div class="details">
-                        <p><%= i.description %></p>
-                        <p><%= i.category %></p>
+                        <span class="d-block p-2 bg-primary text-white"><p><%= i.description%></p></span>
+                        <span class="d-block p-2 bg-dark text-white"><p><%= i.category %></p></span>
+                        <span class="d-block p-2 bg-primary text-white"><p><%= i.date%></p></span>
                     </div>
                     <div class="delete-button">
                         <a href="delete-todolist/?id=<%= i._id %>">
-                            <i class="fas fa-window-close"></i>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
                         </a>
                     </div>
                 </li>
             <%}%>
         </ul>
     </div>
-    <script  type="text/javascript" src="/js/home.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
+<script  type="text/javascript" src="/js/home.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </body>
 </html>

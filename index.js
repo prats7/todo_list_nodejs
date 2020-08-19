@@ -22,10 +22,12 @@ var todoList = [
     {
         description: "vegetables",
         category: "personal",
+        duedate: 12-08-2020
     },
     {
         description: "vegetables",
         category: "personal",
+        duedate: 16-08-2020
     }
 ]
 
